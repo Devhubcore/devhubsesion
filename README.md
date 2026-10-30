@@ -27,7 +27,7 @@ pip install devhubsesion
 ---
 
 ## Quick start
-
+```
 from devhubsesion import DevHubSession
 
 with DevHubSession(
@@ -39,7 +39,7 @@ with DevHubSession(
 
     for c in tg.list_private_chats()[:5]:
         print(c["id"], c["name"])
-
+```
 ---
 
 ## Methods
