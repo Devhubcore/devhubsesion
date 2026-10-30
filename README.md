@@ -20,8 +20,9 @@
 ---
 
 ## Install
-
+```
 pip install devhubsesion
+```
 
 ---
 
