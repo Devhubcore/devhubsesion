@@ -20,26 +20,57 @@
 ---
 
 ## Install
-```
-pip install devhubsesion
-```
+
+    pip install devhubsesion
 
 ---
 
 ## Quick start
-```
-from devhubsesion import DevHubSession
 
-with DevHubSession(
-    session_string="your-session-string",
-    api_id=123456,
-    api_hash="your-api-hash",
-) as tg:
-    print("logged in as:", tg.me.first_name, tg.me.id)
+    from devhubsesion import DevHubSession
 
-    for c in tg.list_private_chats()[:5]:
-        print(c["id"], c["name"])
-```
+    with DevHubSession(
+        session_string="your-session-string",
+        api_id=123456,
+        api_hash="your-api-hash",
+    ) as tg:
+        print("logged in as:", tg.me.first_name, tg.me.id)
+
+        for c in tg.list_private_chats()[:5]:
+            print(c["id"], c["name"])
+
+---
+
+## Update v0.2.0
+
+**New features added:**
+
+1. **Terminal Chat History:** View the latest messages of any chat directly in your terminal.
+2. **Advanced Chat Search:** Search for a keyword (e.g., "hello") across all private chats and get the results along with the chat names.
+
+**Upgrade library:**
+
+    pip install --upgrade devhubsesion
+
+**Usage:**
+
+    from devhubsesion import DevHubSession
+
+    API_ID = api_id_here
+    API_HASH = 'api_hash_here'
+    SESSION = "session_here"
+
+    with DevHubSession(session_string=SESSION, api_id=API_ID, api_hash=API_HASH) as tg:
+        tg.print_chat_history("target_id", limit=3)
+        
+        print()
+        print("Search results:")
+        
+        for r in tg.search("keyword", limit=5):
+            print(r['chat_name'])
+            print(r['text'])
+            print()
+
 ---
 
 ## Methods
@@ -49,6 +80,8 @@ Chats:
 - list_groups_channels
 - dump_history
 - last_message
+- print_chat_history
+- search
 
 Backup:
 - backup_voices
