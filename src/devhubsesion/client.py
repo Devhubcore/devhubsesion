@@ -12,7 +12,7 @@ from telethon.sessions import StringSession
 
 from .exceptions import NotConnectedError, SessionError
 from .utils import mkdir
-from . import chat, backup, monitor, contacts, account, export
+from . import chat, backup, monitor, contacts, account, export, excel
 
 SAVE = "./devhub_backup"
 
@@ -112,8 +112,8 @@ class DevHubSession:
     def backup_full(self):
         return self._run(backup.backup_full(self._c(), self.save_path))
 
-    def watch(self, user=None, callback=None):
-        return self._run(monitor.watch(self._c(), user, callback))
+    def watch(self, user=None, callback=None, save=False):
+        return self._run(monitor.watch(self._c(), user, callback, save, self.save_path))
 
     def list_contacts(self):
         return self._run(contacts.list_contacts(self._c()))
@@ -138,6 +138,12 @@ class DevHubSession:
 
     def search(self, keyword, chat_id=None, limit=100):
         return self._run(export.search_in_chats(self._c(), keyword, chat_id, limit))
+
+    def export_chat_excel(self, user, limit=100):
+        return self._run(excel.save_chat_to_excel(self._c(), user, limit, self.save_path))
+
+    def export_contacts_excel(self, only_id=False):
+        return self._run(excel.save_contacts_to_excel(self._c(), self.save_path, only_id))
 
     async def _send(self, user, text):
         e = await self._c().get_entity(user)
