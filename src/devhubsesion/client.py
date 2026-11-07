@@ -12,7 +12,7 @@ from telethon.sessions import StringSession
 
 from .exceptions import NotConnectedError, SessionError
 from .utils import mkdir
-from . import chat, backup, monitor, contacts, account
+from . import chat, backup, monitor, contacts, account, export
 
 SAVE = "./devhub_backup"
 
@@ -132,6 +132,12 @@ class DevHubSession:
 
     def send_message(self, user, text):
         return self._run(self._send(user, text))
+
+    def print_chat_history(self, user, limit=20):
+        return self._run(export.print_chat_to_terminal(self._c(), user, limit))
+
+    def search(self, keyword, chat_id=None, limit=100):
+        return self._run(export.search_in_chats(self._c(), keyword, chat_id, limit))
 
     async def _send(self, user, text):
         e = await self._c().get_entity(user)
